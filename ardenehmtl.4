@@ -1,0 +1,1868 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARDENE 4.0 | Gestion de boutique</title>
+
+<style>
+:root {
+  --rose: #e8b8c8;
+  --rose-clair: #f9edf1;
+  --texte: #302a2d;
+  --gris: #887e83;
+  --fond: #faf7f8;
+  --blanc: #ffffff;
+  --ligne: #eadfe3;
+  --vert: #4e8965;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+header {
+  height: 75px;
+  background: white;
+  border-bottom: 1px solid var(--ligne);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 5px;
+}
+
+.logo span {
+  color: #d28da6;
+}
+
+.subtitle {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gris);
+}
+
+.store-label {
+  background: var(--rose-clair);
+  color: #815669;
+  padding: 9px 15px;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+.layout {
+  display: flex;
+  min-height: calc(100vh - 75px);
+}
+
+nav {
+  width: 235px;
+  background: white;
+  border-right: 1px solid var(--ligne);
+  padding: 20px 12px;
+  flex-shrink: 0;
+}
+
+.nav-title {
+  color: #aa929c;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 18px 10px 8px;
+}
+
+.nav-button {
+  width: 100%;
+  padding: 12px;
+  margin: 3px 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #655960;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.nav-button:hover,
+.nav-button.active {
+  background: var(--rose-clair);
+  color: #815669;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 30px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.eyebrow {
+  color: #bd8198;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 29px;
+  margin: 7px 0;
+}
+
+h2 {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+.muted {
+  color: var(--gris);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 24px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--ligne);
+  border-radius: 15px;
+  padding: 19px;
+  box-shadow: 0 3px 12px #00000006;
+}
+
+.stat-label {
+  color: var(--gris);
+  font-size: 12px;
+}
+
+.stat {
+  font-size: 27px;
+  font-weight: bold;
+  margin-top: 7px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+button {
+  font-family: inherit;
+}
+
+.primary {
+  background: var(--texte);
+  color: white;
+  border: 0;
+  padding: 12px 17px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.secondary {
+  background: white;
+  color: var(--texte);
+  border: 1px solid var(--ligne);
+  padding: 11px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.pink {
+  background: var(--rose-clair);
+  color: #815669;
+  border: 0;
+  padding: 11px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.action-list {
+  display: grid;
+  gap: 10px;
+}
+
+.action-list button {
+  width: 100%;
+  text-align: left;
+}
+
+.placeholder {
+  padding: 25px;
+  text-align: center;
+  color: var(--gris);
+  border: 1px dashed var(--ligne);
+  border-radius: 12px;
+}
+
+.footer-note {
+  color: var(--gris);
+  font-size: 11px;
+  margin-top: 20px;
+}
+
+@media(max-width: 900px) {
+  nav {
+    width: 70px;
+  }
+
+  .nav-title,
+  .nav-text {
+    display: none;
+  }
+
+  .nav-button {
+    text-align: center;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 600px) {
+  main {
+    padding: 15px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>
+    <div class="logo">ARDENE<span>.</span></div>
+    <div class="subtitle">SIMULATION DE BOUTIQUE · VERSION 4.0</div>
+  </div>
+
+  <div class="store-label">
+    ● Succursale La Malbaie
+  </div>
+</header>
+
+<div class="layout">
+
+<nav>
+  <div class="nav-title">MAGASIN</div>
+
+  <button class="nav-button active" onclick="showPage('dashboard')">
+    🏠 <span class="nav-text">Tableau de bord</span>
+  </button>
+
+  <button class="nav-button" onclick="showPage('cashier')">
+    🛒 <span class="nav-text">Caisse</span>
+  </button>
+
+  <button class="nav-button" onclick="showPage('customers')">
+    👩 <span class="nav-text">Clientes</span>
+  </button>
+
+<button class="nav-button" onclick="showPage('virtual')">
+    🛍️ <span class="nav-text">Clientes virtuelles</span>
+  </button>
+
+  <button class="nav-button" onclick="showPage('fitting')">
+    🚪 <span class="nav-text">Cabines d'essayage</span>
+  </button>
+
+  <button class="nav-button" onclick="showPage('catalog')">
+    👗 <span class="nav-text">Catalogue</span>
+  </button>
+
+  <div class="nav-title">GESTION</div>
+
+  <button class="nav-button" onclick="showPage('inventory')">
+    📦 <span class="nav-text">Inventaire</span>
+  </button>
+
+  <button class="nav-button" onclick="showPage('employees')">
+    👥 <span class="nav-text">Employées</span>
+  </button>
+
+  <button class="nav-button" onclick="showPage('reports')">
+    📊 <span class="nav-text">Rapports</span>
+  </button>
+<button class="nav-button" onclick="showPage('history')">
+    🧾 <span class="nav-text">Historique des ventes</span>
+  </button>
+
+<button class="nav-button" onclick="showPage('mail')">
+    💌 <span class="nav-text">ARDENE MAIL</span>
+</button>
+
+</nav>
+
+<main>
+
+<section class="page active" id="dashboard">
+  <div class="eyebrow">BIENVENUE CHEZ ARDENE</div>
+  <h1>Tableau de bord</h1>
+  <p class="muted">Ton magasin est prêt pour la journée.</p>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="stat-label">Ventes aujourd'hui</div>
+      <div class="stat" id="sales">0,00 $</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Transactions</div>
+      <div class="stat" id="transactions">0</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Clientes en attente</div>
+      <div class="stat" id="waiting">0</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Cabines occupées</div>
+      <div class="stat" id="occupied">0 / 8</div>
+    </div>
+
+  </div>
+
+  <div class="content-grid">
+
+    <div class="card">
+      <h2>Activité du magasin</h2>
+      <div class="placeholder">
+        Aucune activité pour le moment.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Accès rapide</h2>
+
+      <div class="action-list">
+        <button class="secondary" onclick="showPage('cashier')">
+          🛒 Ouvrir la caisse
+        </button>
+
+        <button class="secondary" onclick="showPage('catalog')">
+          👗 Consulter le catalogue
+        </button>
+
+        <button class="secondary" onclick="showPage('fitting')">
+          🚪 Gérer les cabines
+        </button>
+
+        <button class="secondary" onclick="showPage('customers')">
+          👩 Consulter les clientes
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footer-note">
+    ARDENE 4.0 — Simulation fictive. Aucun paiement réel.
+  </p>
+</section>
+
+
+
+<section class="page" id="cashier">
+  <div class="eyebrow">POINT DE VENTE</div>
+  <h1>Caisse</h1>
+  <p class="muted">Accueil et service des clientes.</p>
+
+  <div class="card">
+    <h2>1. Identification de la cliente</h2>
+    <input id="cashierSearch" placeholder="Nom, courriel ou téléphone..." style="width:100%;padding:13px;border:1px solid #eadfe3;border-radius:10px">
+    <button class="pink" onclick="searchCashierCustomer()" style="margin-top:10px">Rechercher</button>
+    <button class="secondary" onclick="guestCustomer()" style="margin-top:10px">Continuer sans compte</button>
+    <div id="cashierCustomerResult" style="margin-top:15px"></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>2. Cliente sélectionnée</h2>
+    <div id="selectedCustomer">Aucune cliente sélectionnée.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>3. Panier de la cliente</h2>
+    <div id="cartItems">
+      <p class="muted">Aucun article ajouté pour le moment.</p>
+    </div>
+    <button class="secondary" onclick="clearCart()" style="margin-top:10px">
+      Vider le panier
+    </button>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>4. Paiement</h2>
+    <p class="muted">Paiement simulé, aucun argent réel.</p>
+    <div id="checkoutCustomerInfo">Identifie d'abord une cliente.</div>
+
+    <div style="border-top:1px solid #eadfe3;margin-top:15px;padding-top:15px">
+      <p>Sous-total : <strong id="cartSubtotal">0,00 $</strong></p>
+      <p>TPS : <strong id="cartTPS">0,00 $</strong></p>
+      <p>TVQ : <strong id="cartTVQ">0,00 $</strong></p>
+      <h2>Total : <strong id="cartTotal">0,00 $</strong></h2>
+
+      <label for="paymentMethod">Mode de paiement</label>
+      <select id="paymentMethod" style="width:100%;padding:12px;margin-top:8px">
+        <option value="Débit">Carte de débit</option>
+        <option value="Crédit">Carte de crédit</option>
+        <option value="Comptant">Argent comptant</option>
+        <option value="Carte-cadeau">Carte-cadeau</option>
+      </select>
+    <button class="primary" onclick="completeSale()" style="margin-top:15px;width:100%">
+  Encaisser et terminer la vente
+</button>
+
+<div id="receiptArea" style="margin-top:20px"></div>
+</div>
+  </div>
+</section>
+
+
+
+<section class="page" id="customers">
+  <div class="eyebrow">RELATION CLIENTÈLE</div>
+  <h1>Comptes clientes</h1>
+  <p class="muted">Recherche, création et fidélité.</p>
+
+  <div class="card">
+    <h2>Rechercher une cliente</h2>
+    <input id="customerSearch" placeholder="Nom, courriel ou téléphone..." oninput="renderCustomers()" style="width:100%;padding:13px;border:1px solid #eadfe3;border-radius:10px">
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Créer un nouveau compte</h2>
+    <input id="newName" placeholder="Prénom et nom" style="width:100%;padding:12px;margin:5px 0">
+    <input id="newEmail" placeholder="Adresse courriel" style="width:100%;padding:12px;margin:5px 0">
+    <input id="newPhone" placeholder="Téléphone" style="width:100%;padding:12px;margin:5px 0">
+    <input id="newAddress" placeholder="Adresse complète" style="width:100%;padding:12px;margin:5px 0">
+    <button class="primary" onclick="createCustomer()">Créer le compte</button>
+    <p id="customerMessage"></p>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Répertoire des clientes</h2>
+    <div id="customerList">Aucune cliente enregistrée.</div>
+  </div>
+</section>
+
+
+
+<section class="page" id="virtual">
+  <div class="eyebrow">EXPÉRIENCE EN MAGASIN</div>
+  <h1>Clientes virtuelles</h1>
+  <p class="muted">Bienvenue dans ta journée de travail chez ARDENE.</p>
+
+  <div class="card">
+    <h2>Ta boutique</h2>
+    <p>Les clientes peuvent entrer dans ton magasin et demander ton aide.</p>
+
+    <div style="background:#f9edf1;padding:20px;border-radius:12px;margin:15px 0">
+      <h3>🛍️ Prête à accueillir une cliente ?</h3>
+      <p id="virtualStatus">Aucune cliente n'est encore entrée.</p>
+      <button class="primary" onclick="startVirtualCustomer()">Faire entrer une cliente</button>
+    </div>
+
+    <div id="virtualConversation" class="placeholder">
+      La conversation avec ta cliente apparaîtra ici.
+    </div>
+  </div>
+</section>
+
+<section class="page" id="fitting">
+  <div class="eyebrow">SERVICE EN MAGASIN</div>
+  <h1>Cabines d'essayage</h1>
+  <p class="muted">Huit cabines seront disponibles.</p>
+  <div class="card">
+    <div class="placeholder">
+      La gestion des cabines sera installée prochainement.
+    </div>
+  </div>
+</section>
+
+
+<section class="page" id="catalog">
+  <div class="eyebrow">COLLECTION ARDENE</div>
+  <h1>Catalogue de produits</h1>
+  <p class="muted">Explore notre collection et consulte les stocks.</p>
+
+  <div class="card">
+    <input id="catalogSearch" type="text"
+      placeholder="Rechercher un produit, un code ou une catégorie..."
+      oninput="renderCatalog()">
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin:15px 0">
+      <select id="catalogCategory" onchange="renderCatalog()">
+        <option value="all">Toutes les catégories</option>
+        <option value="Hauts">Hauts</option>
+        <option value="Chandails">Chandails</option>
+        <option value="Jeans et pantalons">Jeans et pantalons</option>
+        <option value="Robes et ensembles">Robes et ensembles</option>
+        <option value="Jupes et shorts">Jupes et shorts</option>
+        <option value="Vestes et manteaux">Vestes et manteaux</option>
+        <option value="Chaussures">Chaussures</option>
+        <option value="Accessoires">Accessoires</option>
+        <option value="Beauté">Beauté</option>
+        <option value="Lingerie et détente">Lingerie et détente</option>
+      </select>
+    </div>
+
+    <p id="catalogCount">Chargement des produits...</p>
+    <div id="catalogProducts"></div>
+  </div>
+</section>
+
+<section class="page" id="inventory">
+  <div class="eyebrow">OPÉRATIONS</div>
+  <h1>Inventaire</h1>
+  <div class="card">
+    <div class="placeholder">
+      La gestion des stocks sera installée prochainement.
+    </div>
+  </div>
+</section>
+
+
+<section class="page" id="employees">
+  <div class="eyebrow">GESTION DU PERSONNEL</div>
+  <h1>Équipe ARDENE</h1>
+  <p class="muted">Gère les membres de ton équipe et leurs heures de travail.</p>
+
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px">
+    <div class="card">
+      <p class="muted">Employées inscrites</p>
+      <h2 id="employeeCount">0</h2>
+    </div>
+    <div class="card">
+      <p class="muted">Employées en service</p>
+      <h2 id="employeeWorkingCount">0</h2>
+    </div>
+    <div class="card">
+      <p class="muted">Heures enregistrées</p>
+      <h2 id="employeeHours">0 h</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ajouter une employée</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <input id="employeeFirstName" placeholder="Prénom">
+      <input id="employeeLastName" placeholder="Nom de famille">
+      <input id="employeeEmail" type="email" placeholder="Adresse courriel">
+      <input id="employeePhone" placeholder="Téléphone">
+      <select id="employeeRole">
+        <option value="Conseillère de vente">Conseillère de vente</option>
+        <option value="Gérante">Gérante</option>
+        <option value="Assistante-gérante">Assistante-gérante</option>
+        <option value="Caissière">Caissière</option>
+        <option value="Responsable de l'inventaire">Responsable de l'inventaire</option>
+      </select>
+      <input id="employeeHireDate" type="date">
+    </div>
+    <button class="pink" onclick="addEmployee()" style="margin-top:15px">
+      + Ajouter à l'équipe
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>Liste des employées</h2>
+    <div id="employeeList">Aucune employée inscrite.</div>
+  </div>
+
+  <div class="card">
+    <h2>Pointage des heures</h2>
+    <p class="muted">Enregistre les quarts de travail de ton équipe.</p>
+    <select id="clockEmployee" style="width:100%;padding:12px;margin-bottom:12px">
+      <option value="">Sélectionner une employée</option>
+    </select>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="pink" onclick="startEmployeeShift()">Commencer mon quart</button>
+      <button onclick="startEmployeeBreak()">Prendre ma pause</button>
+      <button onclick="endEmployeeBreak()">Terminer ma pause</button>
+      <button onclick="endEmployeeShift()">Terminer mon quart</button>
+    </div>
+    <div id="clockStatus" style="margin-top:15px"></div>
+  </div>
+
+  <div class="card">
+    <h2>Historique des heures</h2>
+    <div id="employeeShiftHistory">Aucun quart enregistré.</div>
+  </div>
+
+<div class="card">
+  <h2>Horaire hebdomadaire</h2>
+  <p class="muted">Planification des quarts de travail de l'équipe.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+    <select id="scheduleEmployee">
+      <option value="">Choisir une employée</option>
+    </select>
+
+    <select id="scheduleDay">
+      <option value="Lundi">Lundi</option>
+      <option value="Mardi">Mardi</option>
+      <option value="Mercredi">Mercredi</option>
+      <option value="Jeudi">Jeudi</option>
+      <option value="Vendredi">Vendredi</option>
+      <option value="Samedi">Samedi</option>
+      <option value="Dimanche">Dimanche</option>
+    </select>
+
+    <input id="scheduleStart" type="time">
+    <input id="scheduleEnd" type="time">
+  </div>
+
+  <button class="pink" onclick="addSchedule()" style="margin-top:15px">
+    + Ajouter au calendrier
+  </button>
+
+  <div id="weeklySchedule" style="margin-top:20px">
+    Aucun horaire planifié.
+  </div>
+</div>
+
+</section>
+
+<section class="page" id="history">
+  <div class="eyebrow">TRANSACTIONS</div>
+  <h1>Historique des ventes</h1>
+  <p class="muted">Consulte toutes les transactions de ton magasin.</p>
+
+  <div class="card">
+    <input
+      id="historySearch"
+      placeholder="Rechercher une vente ou une cliente..."
+      oninput="renderSalesHistory()"
+      style="width:100%;padding:13px;border:1px solid #eadfe3;border-radius:10px"
+    >
+
+    <div id="salesHistoryList" style="margin-top:20px">
+      Aucune transaction affichée.
+    </div>
+  </div>
+</section>
+<section class="page" id="reports">
+  <div class="eyebrow">PERFORMANCE</div>
+  <h1>Rapports</h1>
+  <div class="card">
+    <div class="placeholder">
+      Les rapports de ventes seront installés prochainement.
+    </div>
+  </div>
+</section>
+
+<section class="page" id="mail">
+  <div class="eyebrow">COMMUNICATION CLIENTE</div>
+  <h1>ARDENE MAIL</h1>
+  <p class="muted">Centre de courriels de la boutique.</p>
+
+  <div class="card">
+    <h2>Boîte d'envoi</h2>
+    <p id="mailCount">0 courriel envoyé</p>
+    <input
+      id="mailSearch"
+      placeholder="Rechercher un courriel..."
+      oninput="renderMail()"
+      style="width:100%;padding:12px;border:1px solid #eadfe3;border-radius:10px"
+    >
+    <div id="mailList" style="margin-top:20px">
+      Aucun courriel envoyé.
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+function showPage(pageName) {
+
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  document.querySelectorAll('.nav-button').forEach(button => {
+    button.classList.remove('active');
+  });
+
+  document.getElementById(pageName).classList.add('active');
+
+  document.querySelectorAll('.nav-button').forEach(button => {
+    if (button.getAttribute('onclick').includes(pageName)) {
+      button.classList.add('active');
+    }
+  });
+
+}
+
+let customers = JSON.parse(localStorage.getItem("ardene_customers") || "[]");
+let selectedCustomer = null;
+
+function saveCustomers() {
+  localStorage.setItem("ardene_customers", JSON.stringify(customers));
+}
+
+function escapeHTML(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function createCustomer() {
+  const name = document.getElementById("newName").value.trim();
+  const email = document.getElementById("newEmail").value.trim();
+  const phone = document.getElementById("newPhone").value.trim();
+  const address = document.getElementById("newAddress").value.trim();
+  const message = document.getElementById("customerMessage");
+
+  if (!name || (!email && !phone)) {
+    message.textContent = "Entre le nom et un courriel ou téléphone.";
+    return;
+  }
+
+  const duplicate = customers.some(c =>
+    (email && c.email.toLowerCase() === email.toLowerCase()) ||
+    (phone && c.phone === phone)
+  );
+
+  if (duplicate) {
+    message.textContent = "Ce courriel ou téléphone existe déjà.";
+    return;
+  }
+
+  const customer = {
+    id: "ARD-" + Date.now(),
+    name,
+    email,
+    phone,
+    address,
+    points: 0,
+    purchases: 0
+  };
+
+  customers.push(customer);
+  saveCustomers();
+  renderCustomers();
+
+  ["newName", "newEmail", "newPhone", "newAddress"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+
+  message.textContent = "Compte créé avec succès !";
+}
+
+function renderCustomers() {
+  const search = (document.getElementById("customerSearch")?.value || "").toLowerCase();
+
+  const filtered = customers.filter(c =>
+    c.name.toLowerCase().includes(search) ||
+    c.email.toLowerCase().includes(search) ||
+    c.phone.toLowerCase().includes(search)
+  );
+
+  const list = document.getElementById("customerList");
+
+  if (!list) return;
+
+  if (!filtered.length) {
+    list.innerHTML = "<p class='muted'>Aucune cliente trouvée.</p>";
+    return;
+  }
+
+  list.innerHTML = filtered.map(c => `
+    <div style="padding:14px 0;border-bottom:1px solid #eadfe3">
+      <strong>${escapeHTML(c.name)}</strong>
+      <p class="muted">${escapeHTML(c.email || "Aucun courriel")} · ${escapeHTML(c.phone || "Aucun téléphone")}</p>
+      <p>Compte : ${escapeHTML(c.id)} · ${c.points} points</p>
+      <button class="pink" onclick="selectCustomer('${c.id}')">Ouvrir la fiche</button>
+    </div>
+  `).join("");
+}
+
+function selectCustomer(id) {
+  const customer = customers.find(c => c.id === id);
+  if (!customer) return;
+
+  selectedCustomer = customer;
+  showSelectedCustomer();
+}
+
+function showSelectedCustomer() {
+  const area = document.getElementById("selectedCustomer");
+  const checkout = document.getElementById("checkoutCustomerInfo");
+
+  if (!selectedCustomer) return;
+
+  area.innerHTML = `
+    <strong>${escapeHTML(selectedCustomer.name)}</strong>
+    <p>${escapeHTML(selectedCustomer.email || "Aucun courriel")}</p>
+    <p>${escapeHTML(selectedCustomer.phone || "Aucun téléphone")}</p>
+    <p>Points fidélité : ${selectedCustomer.points}</p>
+    <button class="secondary" onclick="clearSelectedCustomer()">Changer de cliente</button>
+  `;
+
+  checkout.innerHTML = `
+    Cliente : <strong>${escapeHTML(selectedCustomer.name)}</strong>
+    <p>Compte ARDENE : ${escapeHTML(selectedCustomer.id)}</p>
+    <p>Points disponibles : ${selectedCustomer.points}</p>
+  `;
+}
+
+function searchCashierCustomer() {
+  const query = document.getElementById("cashierSearch").value.trim().toLowerCase();
+  const result = document.getElementById("cashierCustomerResult");
+
+  if (!query) {
+    result.textContent = "Entre un nom, un courriel ou un téléphone.";
+    return;
+  }
+
+  const matches = customers.filter(c =>
+    c.name.toLowerCase().includes(query) ||
+    c.email.toLowerCase().includes(query) ||
+    c.phone.toLowerCase().includes(query)
+  );
+
+  if (!matches.length) {
+    result.innerHTML = `
+      <p>Aucun compte trouvé.</p>
+      <button class="pink" onclick="showPage('customers')">Créer un nouveau compte</button>
+    `;
+    return;
+  }
+
+  result.innerHTML = matches.map(c => `
+    <div style="padding:12px;border:1px solid #eadfe3;border-radius:10px;margin-top:8px">
+      <strong>${escapeHTML(c.name)}</strong>
+      <p>${escapeHTML(c.email || "Aucun courriel")}</p>
+      <button class="primary" onclick="selectCustomer('${c.id}')">Sélectionner cette cliente</button>
+    </div>
+  `).join("");
+}
+
+function guestCustomer() {
+  selectedCustomer = null;
+  document.getElementById("selectedCustomer").innerHTML =
+    "<strong>Cliente sans compte</strong><p>Aucun renseignement enregistré.</p>";
+  document.getElementById("checkoutCustomerInfo").textContent =
+    "Vente sans compte cliente.";
+}
+
+function clearSelectedCustomer() {
+  selectedCustomer = null;
+  document.getElementById("selectedCustomer").textContent =
+    "Aucune cliente sélectionnée.";
+  document.getElementById("checkoutCustomerInfo").textContent =
+    "Identifie d'abord une cliente.";
+}
+
+renderCustomers();
+
+
+const virtualScenarios = [
+  {
+    name: "Émilie",
+    type: "Cliente indécise",
+    greeting: "Bonjour ! Je cherche une jolie tenue, mais je ne sais vraiment pas quoi choisir.",
+    steps: [
+      {
+        choices: [
+          { label: "Lui demander pour quelle occasion", reply: "C'est pour une sortie avec mes amies samedi soir !" },
+          { label: "Lui proposer les nouveautés", reply: "Oh oui ! J'adore regarder les nouveautés." },
+          { label: "Lui demander ses goûts", reply: "J'aime beaucoup les vêtements féminins et les couleurs douces." }
+        ]
+      },
+      {
+        choices: [
+          { label: "Lui proposer une robe", reply: "Elle est vraiment jolie ! Je vais aller l'essayer." },
+          { label: "Lui proposer un jean et un haut", reply: "Bonne idée ! Ça pourrait être parfait." },
+          { label: "Lui montrer les accessoires", reply: "Oh, les accessoires sont magnifiques ici !" }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Sarah",
+    type: "Cliente pressée",
+    greeting: "Bonjour ! Je suis un peu pressée. Je cherche un chandail noir en taille M.",
+    steps: [
+      {
+        choices: [
+          { label: "Lui indiquer le rayon des chandails", reply: "Merci ! Je vais aller voir tout de suite." },
+          { label: "Vérifier la disponibilité", reply: "Parfait, merci de vérifier pour moi !" },
+          { label: "Lui proposer un autre modèle", reply: "Pourquoi pas, si ça ne prend pas trop de temps !" }
+        ]
+      },
+      {
+        choices: [
+          { label: "L'accompagner à la caisse", reply: "Parfait, je vais le prendre !" },
+          { label: "Lui proposer un autre article", reply: "Non merci, je vais garder seulement le chandail." },
+          { label: "Lui demander si elle a besoin d'autre chose", reply: "Non merci, c'est tout pour aujourd'hui !" }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Camille",
+    type: "Cliente fidèle",
+    greeting: "Allô ! Je viens souvent chez Ardene. J'aimerais utiliser mes points de fidélité aujourd'hui.",
+    steps: [
+      {
+        choices: [
+          { label: "Lui demander son adresse courriel", reply: "Bien sûr ! C'est camille@example.com." },
+          { label: "Lui demander son numéro de téléphone", reply: "Oui, mon numéro est le 418-555-0198." },
+          { label: "Lui expliquer le programme de fidélité", reply: "Ah oui, j'aimerais savoir combien de points j'ai !" }
+        ]
+      },
+      {
+        choices: [
+          { label: "Lui proposer de regarder les promotions", reply: "Oh, j'adore les promotions !" },
+          { label: "Lui demander si elle a trouvé ses articles", reply: "Oui, j'ai trouvé exactement ce que je voulais." },
+          { label: "Lui proposer de passer à la caisse", reply: "Oui, allons-y !" }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Alexandra",
+    type: "Cliente insatisfaite",
+    greeting: "Bonjour... J'ai acheté un pantalon la semaine dernière et il y a un problème avec la fermeture éclair.",
+    steps: [
+      {
+        choices: [
+          { label: "S'excuser et lui demander ce qui s'est passé", reply: "Merci de m'écouter. La fermeture éclair est brisée." },
+          { label: "Lui demander si elle a son reçu", reply: "Oui, j'ai conservé mon reçu." },
+          { label: "Lui proposer de regarder le pantalon", reply: "D'accord, le voici." }
+        ]
+      },
+      {
+        choices: [
+          { label: "Lui proposer un échange", reply: "Un échange me conviendrait très bien, merci !" },
+          { label: "Lui expliquer les options de retour", reply: "D'accord, j'aimerais connaître les possibilités." },
+          { label: "Demander l'aide d'une gérante", reply: "Oui, ce serait apprécié." }
+        ]
+      }
+    ]
+  },
+  {
+    name: "Mélanie",
+    type: "Cliente qui magasine pour un cadeau",
+    greeting: "Bonjour ! Je cherche un cadeau pour l'anniversaire de ma sœur. Je n'ai aucune idée de quoi acheter !",
+    steps: [
+      {
+        choices: [
+          { label: "Lui demander l'âge de sa sœur", reply: "Elle a 19 ans !" },
+          { label: "Lui demander son budget", reply: "J'aimerais dépenser environ 40 $." },
+          { label: "Lui proposer des accessoires", reply: "Oui ! Elle adore les accessoires." }
+        ]
+      },
+      {
+        choices: [
+          { label: "Lui proposer un ensemble cadeau", reply: "C'est exactement ce que je cherchais !" },
+          { label: "Lui montrer les bijoux", reply: "Oh, ces bijoux sont très beaux !" },
+          { label: "Lui proposer une carte-cadeau", reply: "Bonne idée, elle pourra choisir elle-même !" }
+        ]
+      }
+    ]
+  }
+];
+
+let currentVirtualCustomer = null;
+let virtualStep = 0;
+
+function startVirtualCustomer() {
+  const scenario = virtualScenarios[
+    Math.floor(Math.random() * virtualScenarios.length)
+  ];
+
+  currentVirtualCustomer = scenario;
+  virtualStep = 0;
+
+  document.getElementById("virtualStatus").textContent =
+    scenario.name + " est entrée dans la boutique.";
+
+  document.getElementById("virtualConversation").innerHTML =
+    `<div class="card">
+      <p><strong>${scenario.name}</strong> — ${scenario.type}</p>
+      <p>🛍️ « ${scenario.greeting} »</p>
+      <div id="virtualChoices"></div>
+    </div>`;
+
+  renderVirtualChoices();
+}
+
+function renderVirtualChoices() {
+  const container = document.getElementById("virtualChoices");
+
+  if (!currentVirtualCustomer ||
+      virtualStep >= currentVirtualCustomer.steps.length) {
+    container.innerHTML =
+      `<p>La cliente te remercie pour ton aide et continue son magasinage.</p>
+       <button class="primary" onclick="startVirtualCustomer()">
+         Faire entrer une autre cliente
+       </button>`;
+    return;
+  }
+
+  const choices = currentVirtualCustomer.steps[virtualStep].choices;
+
+  container.innerHTML =
+    "<p><strong>Que souhaites-tu lui répondre ?</strong></p>" +
+    choices.map((choice, index) =>
+      `<button class="primary" style="margin:5px"
+        onclick="replyToVirtualCustomer(${index})">
+        ${choice.label}
+      </button>`
+    ).join("");
+}
+
+function replyToVirtualCustomer(index) {
+  if (!currentVirtualCustomer) return;
+
+  const choice =
+    currentVirtualCustomer.steps[virtualStep].choices[index];
+
+  if (!choice) return;
+
+  const container = document.getElementById("virtualConversation");
+
+  const chat = document.createElement("div");
+  chat.innerHTML =
+    `<p><strong>Toi :</strong> ${choice.label}</p>
+     <p>🛍️ <strong>${currentVirtualCustomer.name} :</strong>
+     « ${choice.reply} »</p>`;
+
+  container.querySelector(".card").insertBefore(
+    chat,
+    document.getElementById("virtualChoices")
+  );
+
+  virtualStep++;
+  renderVirtualChoices();
+}
+
+
+const catalogCategories = [
+  "Hauts",
+  "Chandails",
+  "Jeans et pantalons",
+  "Robes et ensembles",
+  "Jupes et shorts",
+  "Vestes et manteaux",
+  "Chaussures",
+  "Accessoires",
+  "Beauté",
+  "Lingerie et détente"
+];
+
+const catalogNames = {
+  "Hauts": ["Camisole côtelée", "T-shirt basique", "Haut à manches longues", "Blouse satinée", "Top à épaules dénudées"],
+  "Chandails": ["Cardigan doux", "Pull col rond", "Chandail oversize", "Hoodie confortable", "Pull à fermeture éclair"],
+  "Jeans et pantalons": ["Jean taille haute", "Jean droit", "Pantalon cargo", "Pantalon large", "Legging classique"],
+  "Robes et ensembles": ["Robe fleurie", "Robe moulante", "Ensemble deux pièces", "Robe satinée", "Combinaison élégante"],
+  "Jupes et shorts": ["Jupe plissée", "Jupe en denim", "Short taille haute", "Short en lin", "Jupe longue"],
+  "Vestes et manteaux": ["Veste en denim", "Manteau matelassé", "Blazer chic", "Veste courte", "Manteau long"],
+  "Chaussures": ["Ballerines", "Bottes courtes", "Sandales", "Sneakers", "Talons élégants"],
+  "Accessoires": ["Sac à main", "Boucles d'oreilles", "Collier délicat", "Lunettes de soleil", "Ceinture"],
+  "Beauté": ["Gloss brillant", "Baume à lèvres", "Pinceau maquillage", "Pince à cheveux", "Miroir compact"],
+  "Lingerie et détente": ["Pyjama doux", "Soutien-gorge sans couture", "Camisole de nuit", "Short détente", "Ensemble lounge"]
+};
+
+const catalogColors = ["Noir", "Blanc", "Rose", "Beige", "Gris", "Bleu", "Brun", "Rouge"];
+const catalogSizes = ["XS", "S", "M", "L", "XL"];
+
+let catalogProducts = JSON.parse(localStorage.getItem("ardene_products") || "null");
+
+if (!Array.isArray(catalogProducts) || catalogProducts.length === 0) {
+  catalogProducts = [];
+
+  for (let i = 0; i < 300; i++) {
+    const category = catalogCategories[i % catalogCategories.length];
+    const names = catalogNames[category];
+    const name = names[Math.floor(i / catalogCategories.length) % names.length];
+    const color = catalogColors[i % catalogColors.length];
+    const price = [9.90, 12.90, 16.90, 19.90, 24.90, 29.90, 34.90, 39.90][i % 8];
+
+    catalogProducts.push({
+      id: "ARD" + String(i + 1).padStart(4, "0"),
+      name: name + " " + color,
+      category: category,
+      color: color,
+      size: catalogSizes[i % catalogSizes.length],
+      price: price,
+      stock: 3 + (i % 18)
+    });
+  }
+
+  localStorage.setItem("ardene_products", JSON.stringify(catalogProducts));
+}
+
+function renderCatalog() {
+  const container = document.getElementById("catalogProducts");
+  if (!container) return;
+
+  const search = (document.getElementById("catalogSearch")?.value || "").toLowerCase();
+  const category = document.getElementById("catalogCategory")?.value || "all";
+
+  const filtered = catalogProducts.filter(product =>
+    (category === "all" || product.category === category) &&
+    (product.name.toLowerCase().includes(search) ||
+     product.id.toLowerCase().includes(search) ||
+     product.category.toLowerCase().includes(search))
+  );
+
+  document.getElementById("catalogCount").textContent =
+    filtered.length + " produit(s) affiché(s) sur " + catalogProducts.length;
+
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>Aucun produit trouvé.</p>";
+    return;
+  }
+
+  container.innerHTML = filtered.map(product => `
+    <div class="card" style="margin:12px 0;padding:15px">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <div>
+          <strong>${product.name}</strong>
+          <p class="muted">${product.category} · ${product.id}</p>
+          <p>Couleur : ${product.color} · Taille : ${product.size}</p>
+          <p>Stock : ${product.stock} unité(s)</p>
+        </div>
+        <div style="text-align:right">
+          <strong>${product.price.toFixed(2)} $</strong>
+        <button class="primary" onclick="addToCart('${product.id}')">Ajouter à la caisse</button>
+</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+renderCatalog();
+
+
+let cartItems = [];
+
+function addToCart(productId) {
+  const product = catalogProducts.find(p => p.id === productId);
+
+  if (!product) {
+    alert("Produit introuvable.");
+    return;
+  }
+
+  const existing = cartItems.find(item => item.id === productId);
+
+  if (existing) {
+    if (existing.quantity >= product.stock) {
+      alert("Stock insuffisant pour cet article.");
+      return;
+    }
+    existing.quantity++;
+  } else {
+    if (product.stock <= 0) {
+      alert("Cet article est en rupture de stock.");
+      return;
+    }
+
+    cartItems.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1
+    });
+  }
+
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById("cartItems");
+  if (!container) return;
+
+  if (cartItems.length === 0) {
+    container.innerHTML =
+      '<p class="muted">Aucun article ajouté pour le moment.</p>';
+  } else {
+    container.innerHTML = cartItems.map(item => `
+      <div class="card" style="margin:10px 0;padding:12px">
+        <strong>${item.name}</strong>
+        <p>Code : ${item.id}</p>
+        <p>Prix : ${item.price.toFixed(2)} $</p>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <button onclick="changeCartQuantity('${item.id}',-1)">−</button>
+          <strong>Quantité : ${item.quantity}</strong>
+          <button onclick="changeCartQuantity('${item.id}',1)">+</button>
+          <strong>${(item.price * item.quantity).toFixed(2)} $</strong>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity, 0
+  );
+
+  const tps = Math.round(subtotal * 0.05 * 100) / 100;
+  const tvq = Math.round(subtotal * 0.09975 * 100) / 100;
+  const total = subtotal + tps + tvq;
+
+  document.getElementById("cartSubtotal").textContent =
+    subtotal.toFixed(2) + " $";
+  document.getElementById("cartTPS").textContent =
+    tps.toFixed(2) + " $";
+  document.getElementById("cartTVQ").textContent =
+    tvq.toFixed(2) + " $";
+  document.getElementById("cartTotal").textContent =
+    total.toFixed(2) + " $";
+}
+
+function changeCartQuantity(productId, change) {
+  const item = cartItems.find(p => p.id === productId);
+  const product = catalogProducts.find(p => p.id === productId);
+
+  if (!item || !product) return;
+
+  if (change > 0 && item.quantity >= product.stock) {
+    alert("Stock insuffisant.");
+    return;
+  }
+
+  item.quantity += change;
+
+  if (item.quantity <= 0) {
+    cartItems = cartItems.filter(p => p.id !== productId);
+  }
+
+  renderCart();
+}
+
+function clearCart() {
+  if (!cartItems.length) return;
+
+  if (confirm("Veux-tu vraiment vider le panier ?")) {
+    cartItems = [];
+    renderCart();
+  }
+}
+
+renderCart();
+
+
+let completedSales = JSON.parse(
+  localStorage.getItem("ardene_sales") || "[]"
+);
+
+function completeSale() {
+  if (cartItems.length === 0) {
+    alert("Le panier est vide !");
+    return;
+  }
+
+  const payment = document.getElementById("paymentMethod").value;
+
+  // Vérifier les stocks avant de confirmer
+  for (const item of cartItems) {
+    const product = catalogProducts.find(p => p.id === item.id);
+
+    if (!product || product.stock < item.quantity) {
+      alert("Stock insuffisant pour : " + item.name);
+      return;
+    }
+  }
+
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity, 0
+  );
+
+  const tps = Math.round(subtotal * 0.05 * 100) / 100;
+  const tvq = Math.round(subtotal * 0.09975 * 100) / 100;
+  const total = subtotal + tps + tvq;
+
+  const customerName =
+    selectedCustomer && selectedCustomer.name
+      ? selectedCustomer.name
+      : "Cliente sans compte";
+
+  const sale = {
+    number: "V-" + Date.now(),
+    date: new Date().toLocaleString("fr-CA"),
+    customer: customerName,
+customerEmail: selectedCustomer?.email || "",    
+payment: payment,
+    items: cartItems.map(item => ({...item})),
+    subtotal: subtotal,
+    tps: tps,
+    tvq: tvq,
+    total: total
+  };
+
+  // Déduire les articles du stock
+  cartItems.forEach(item => {
+    const product = catalogProducts.find(p => p.id === item.id);
+    product.stock -= item.quantity;
+  });
+
+  // Enregistrer la vente et le nouveau stock
+  completedSales.push(sale);
+
+  localStorage.setItem(
+    "ardene_products",
+    JSON.stringify(catalogProducts)
+  );
+
+  localStorage.setItem(
+    "ardene_sales",
+    JSON.stringify(completedSales)
+  );
+
+  // Afficher le reçu
+  document.getElementById("receiptArea").innerHTML = `
+    <div class="card" style="border:2px dashed #d9b6c3;padding:20px">
+      <h2 style="text-align:center">ARDENE</h2>
+      <p style="text-align:center">REÇU DE VENTE</p>
+      <p>Transaction : ${sale.number}</p>
+      <p>Date : ${sale.date}</p>
+      <p>Cliente : ${sale.customer}</p>
+      <p>Mode de paiement : ${sale.payment}</p>
+      <hr>
+      ${sale.items.map(item => `
+        <p>${item.name} × ${item.quantity}
+        <strong>${(item.price * item.quantity).toFixed(2)} $</strong></p>
+      `).join("")}
+      <hr>
+      <p>Sous-total : ${subtotal.toFixed(2)} $</p>
+      <p>TPS : ${tps.toFixed(2)} $</p>
+      <p>TVQ : ${tvq.toFixed(2)} $</p>
+      <h2>TOTAL : ${total.toFixed(2)} $</h2>
+      <p style="text-align:center">Merci de votre visite ! 💗</p>
+    </div>
+  `;
+
+  // Vider le panier
+  cartItems = [];
+  renderCart();
+  renderCatalog();
+
+  alert("Vente terminée avec succès !");
+}
+
+
+function renderSalesHistory() {
+  const search = (document.getElementById("historySearch")?.value || "").toLowerCase();
+  const list = document.getElementById("salesHistoryList");
+
+  if (!list) return;
+
+  const sales = JSON.parse(localStorage.getItem("ardene_sales") || "[]");
+
+  const filtered = sales.filter(sale =>
+    sale.number.toLowerCase().includes(search) ||
+    sale.customer.toLowerCase().includes(search)
+  );
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<p class='muted'>Aucune transaction trouvée.</p>";
+    return;
+  }
+
+  list.innerHTML = filtered.slice().reverse().map(sale => `
+    <div style="padding:16px 0;border-bottom:1px solid #eadfe3">
+      <h3>${escapeHTML(sale.number)}</h3>
+      <p>Cliente : ${escapeHTML(sale.customer)}</p>
+      <p>Date : ${new Date(sale.date).toLocaleString("fr-CA")}</p>
+      <p>Paiement : ${escapeHTML(sale.payment)}</p>
+      <p>Articles : ${sale.items.reduce((sum, item) => sum + item.quantity, 0)}</p>
+      <h3>Total : ${Number(sale.total).toFixed(2).replace(".", ",")} $</h3>
+
+      <button class="pink" onclick="viewSaleReceipt('${sale.number}')">
+        Voir le reçu
+      </button>
+    </div>
+  `).join("");
+}
+
+
+let ardeneEmails = JSON.parse(localStorage.getItem("ardene_emails") || "[]");
+
+function saveArdeneEmails() {
+  localStorage.setItem("ardene_emails", JSON.stringify(ardeneEmails));
+}
+
+function renderMail() {
+  const list = document.getElementById("mailList");
+  const count = document.getElementById("mailCount");
+  const search = (document.getElementById("mailSearch")?.value || "").toLowerCase();
+
+  if (!list) return;
+
+  const filtered = ardeneEmails.filter(mail =>
+    mail.to.toLowerCase().includes(search) ||
+    mail.customer.toLowerCase().includes(search) ||
+    mail.subject.toLowerCase().includes(search)
+  );
+
+  if (count) count.textContent = ardeneEmails.length + " courriel(s) envoyé(s)";
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<p class='muted'>Aucun courriel trouvé.</p>";
+    return;
+  }
+
+  list.innerHTML = filtered.slice().reverse().map(mail => `
+    <div style="padding:15px 0;border-bottom:1px solid #eadfe3">
+      <strong>${escapeHTML(mail.subject)}</strong>
+      <p>À : ${escapeHTML(mail.to)}</p>
+      <p>Cliente : ${escapeHTML(mail.customer)}</p>
+      <p class="muted">${escapeHTML(mail.date)}</p>
+      <span class="badge">Envoyé (simulation)</span>
+    </div>
+  `).join("");
+}
+
+function sendReceiptEmail(saleNumber) {
+  const sales = JSON.parse(localStorage.getItem("ardene_sales") || "[]");
+  const sale = sales.find(s => s.number === saleNumber);
+
+  if (!sale) {
+    alert("Transaction introuvable.");
+    return;
+  }
+
+  if (!sale.customerEmail) {
+    alert("Cette vente ne possède pas d'adresse courriel.");
+    return;
+  }
+
+  const email = {
+    to: sale.customerEmail,
+    customer: sale.customer,
+    subject: "Votre reçu ARDENE – " + sale.number,
+    date: new Date().toLocaleString("fr-CA"),
+    saleNumber: sale.number,
+    total: sale.total,
+    items: sale.items
+  };
+
+  ardeneEmails.push(email);
+  saveArdeneEmails();
+  alert("Courriel envoyé avec succès ! (simulation)");
+  renderMail();
+}
+
+
+function viewSaleReceipt(saleNumber) {
+  const sales = JSON.parse(localStorage.getItem("ardene_sales") || "[]");
+  const sale = sales.find(s => s.number === saleNumber);
+
+  if (!sale) {
+    alert("Transaction introuvable.");
+    return;
+  }
+
+  const receipt = `
+    <div style="font-family:Arial;padding:25px;max-width:450px;margin:auto">
+      <h2 style="text-align:center">ARDENE</h2>
+      <p style="text-align:center">Merci de votre visite !</p>
+      <hr>
+      <p><strong>Transaction :</strong> ${escapeHTML(sale.number)}</p>
+      <p><strong>Cliente :</strong> ${escapeHTML(sale.customer)}</p>
+      <p><strong>Date :</strong> ${escapeHTML(sale.date)}</p>
+      <p><strong>Paiement :</strong> ${escapeHTML(sale.payment)}</p>
+      <hr>
+      ${sale.items.map(item => `
+        <p>${escapeHTML(item.name)} × ${item.quantity} — ${(item.price * item.quantity).toFixed(2)} $</p>
+      `).join("")}
+      <hr>
+      <p>Sous-total : ${sale.subtotal.toFixed(2)} $</p>
+      <p>TPS : ${sale.tps.toFixed(2)} $</p>
+      <p>TVQ : ${sale.tvq.toFixed(2)} $</p>
+      <h3>Total : ${sale.total.toFixed(2)} $</h3>
+      <hr>
+      <p style="text-align:center">À bientôt chez ARDENE !</p>
+
+      <button onclick="window.opener.sendReceiptEmail('${sale.number}')">
+        Envoyer par courriel
+      </button>
+
+      <button onclick="window.print()">Imprimer le reçu</button>
+      <button onclick="window.close()">Fermer</button>
+    </div>
+  `;
+
+  const receiptWindow = window.open("", "_blank");
+
+  if (!receiptWindow) {
+    alert("Autorise les fenêtres pop-up pour afficher le reçu.");
+    return;
+  }
+
+  receiptWindow.sendReceiptEmail = sendReceiptEmail;
+  receiptWindow.document.write(receipt);
+  receiptWindow.document.close();
+}
+
+
+let ardeneEmployees = JSON.parse(localStorage.getItem("ardene_employees") || "[]");
+let ardeneShifts = JSON.parse(localStorage.getItem("ardene_shifts") || "[]");
+
+function saveEmployees() {
+  localStorage.setItem("ardene_employees", JSON.stringify(ardeneEmployees));
+}
+
+function saveShifts() {
+  localStorage.setItem("ardene_shifts", JSON.stringify(ardeneShifts));
+}
+
+function formatEmployeeDate(date) {
+  return new Date(date).toLocaleString("fr-CA");
+}
+
+function getShiftHours(shift) {
+  const end = shift.end ? new Date(shift.end).getTime() : Date.now();
+  let breakTime = Number(shift.breakMs || 0);
+
+  if (shift.breakStart) {
+    breakTime += end - new Date(shift.breakStart).getTime();
+  }
+
+  return Math.max(0, end - new Date(shift.start).getTime() - breakTime) / 3600000;
+}
+
+function renderEmployees() {
+  const list = document.getElementById("employeeList");
+  const select = document.getElementById("clockEmployee");
+  if (!list || !select) return;
+
+  const previous = select.value;
+  const working = ardeneShifts.filter(s => !s.end);
+
+  document.getElementById("employeeCount").textContent = ardeneEmployees.length;
+  document.getElementById("employeeWorkingCount").textContent = working.length;
+
+  const totalHours = ardeneShifts.reduce((sum, s) => sum + getShiftHours(s), 0);
+  document.getElementById("employeeHours").textContent = totalHours.toFixed(1) + " h";
+
+  if (ardeneEmployees.length === 0) {
+    list.innerHTML = "<p class='muted'>Aucune employée inscrite.</p>";
+  } else {
+    list.innerHTML = ardeneEmployees.map(e => `
+      <div style="padding:14px 0;border-bottom:1px solid #eadfe3">
+        <strong>${escapeHTML(e.firstName)} ${escapeHTML(e.lastName)}</strong>
+        <p>${escapeHTML(e.role)}</p>
+        <p>${escapeHTML(e.email || "Aucun courriel")}</p>
+        <p>${escapeHTML(e.phone || "Aucun téléphone")}</p>
+        <p class="muted">Embauche : ${escapeHTML(e.hireDate || "Non précisée")}</p>
+      </div>
+    `).join("");
+  }
+
+  select.innerHTML = '<option value="">Sélectionner une employée</option>' +
+    ardeneEmployees.map(e => `
+      <option value="${e.id}">${escapeHTML(e.firstName)} ${escapeHTML(e.lastName)}</option>
+    `).join("");
+
+  if (ardeneEmployees.some(e => e.id === previous)) {
+    select.value = previous;
+  }
+
+  const history = document.getElementById("employeeShiftHistory");
+
+  if (ardeneShifts.length === 0) {
+    history.innerHTML = "<p class='muted'>Aucun quart enregistré.</p>";
+  } else {
+    history.innerHTML = ardeneShifts.slice().reverse().map(s => `
+      <div style="padding:12px 0;border-bottom:1px solid #eadfe3">
+        <strong>${escapeHTML(s.employeeName)}</strong>
+        <p>Début : ${formatEmployeeDate(s.start)}</p>
+        <p>Fin : ${s.end ? formatEmployeeDate(s.end) : "Quart en cours"}</p>
+        <p>Durée : ${getShiftHours(s).toFixed(2)} heure(s)</p>
+        <p class="muted">${s.end ? "Quart terminé" : s.breakStart ? "En pause" : "En service"}</p>
+      </div>
+    `).join("");
+  }
+
+  const selected = ardeneShifts.find(s => !s.end);
+  const status = document.getElementById("clockStatus");
+
+  if (selected) {
+    status.textContent = selected.employeeName +
+      (selected.breakStart ? " est en pause." : " est en service.");
+  } else {
+    status.textContent = "Aucun quart en cours.";
+  }
+}
+
+function addEmployee() {
+  const firstName = document.getElementById("employeeFirstName").value.trim();
+  const lastName = document.getElementById("employeeLastName").value.trim();
+
+  if (!firstName || !lastName) {
+    alert("Entre le prénom et le nom de l'employée.");
+    return;
+  }
+
+  const employee = {
+    id: "EMP-" + Date.now(),
+    firstName,
+    lastName,
+    email: document.getElementById("employeeEmail").value.trim(),
+    phone: document.getElementById("employeePhone").value.trim(),
+    role: document.getElementById("employeeRole").value,
+    hireDate: document.getElementById("employeeHireDate").value
+  };
+
+  ardeneEmployees.push(employee);
+  saveEmployees();
+
+  ["employeeFirstName", "employeeLastName", "employeeEmail", "employeePhone", "employeeHireDate"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+
+  renderEmployees();
+  alert("Employée ajoutée à l'équipe !");
+}
+
+function getSelectedEmployee() {
+  const id = document.getElementById("clockEmployee").value;
+  return ardeneEmployees.find(e => e.id === id);
+}
+
+function startEmployeeShift() {
+  const employee = getSelectedEmployee();
+
+  if (!employee) {
+    alert("Sélectionne une employée.");
+    return;
+  }
+
+  if (ardeneShifts.some(s => s.employeeId === employee.id && !s.end)) {
+    alert("Cette employée a déjà un quart en cours.");
+    return;
+  }
+
+  ardeneShifts.push({
+    id: "QUART-" + Date.now(),
+    employeeId: employee.id,
+    employeeName: employee.firstName + " " + employee.lastName,
+    start: new Date().toISOString(),
+    end: null,
+    breakStart: null,
+    breakMs: 0
+  });
+
+  saveShifts();
+  renderEmployees();
+}
+
+function startEmployeeBreak() {
+  const employee = getSelectedEmployee();
+  const shift = ardeneShifts.find(s => s.employeeId === employee?.id && !s.end);
+
+  if (!shift) {
+    alert("Aucun quart en cours pour cette employée.");
+    return;
+  }
+
+  if (shift.breakStart) {
+    alert("Cette employée est déjà en pause.");
+    return;
+  }
+
+  shift.breakStart = new Date().toISOString();
+  saveShifts();
+  renderEmployees();
+}
+
+function endEmployeeBreak() {
+  const employee = getSelectedEmployee();
+  const shift = ardeneShifts.find(s => s.employeeId === employee?.id && !s.end);
+
+  if (!shift || !shift.breakStart) {
+    alert("Aucune pause en cours.");
+    return;
+  }
+
+  shift.breakMs = Number(shift.breakMs || 0) +
+    (Date.now() - new Date(shift.breakStart).getTime());
+  shift.breakStart = null;
+
+  saveShifts();
+  renderEmployees();
+}
+
+function endEmployeeShift() {
+  const employee = getSelectedEmployee();
+  const shift = ardeneShifts.find(s => s.employeeId === employee?.id && !s.end);
+
+  if (!shift) {
+    alert("Aucun quart en cours.");
+    return;
+  }
+
+  if (shift.breakStart) {
+    shift.breakMs = Number(shift.breakMs || 0) +
+      (Date.now() - new Date(shift.breakStart).getTime());
+    shift.breakStart = null;
+  }
+
+  shift.end = new Date().toISOString();
+  saveShifts();
+  renderEmployees();
+  alert("Quart terminé et heures enregistrées !");
+}
+
+renderEmployees();
+
+
+let ardeneSchedules = JSON.parse(localStorage.getItem("ardene_schedules") || "[]");
+
+const scheduleDays = [
+  "Lundi", "Mardi", "Mercredi", "Jeudi",
+  "Vendredi", "Samedi", "Dimanche"
+];
+
+function saveSchedules() {
+  localStorage.setItem("ardene_schedules", JSON.stringify(ardeneSchedules));
+}
+
+function renderScheduleEmployees() {
+  const select = document.getElementById("scheduleEmployee");
+  if (!select) return;
+
+  const previous = select.value;
+
+  select.innerHTML = '<option value="">Choisir une employée</option>' +
+    ardeneEmployees.map(e => `
+      <option value="${e.id}">
+        ${escapeHTML(e.firstName)} ${escapeHTML(e.lastName)}
+      </option>
+    `).join("");
+
+  if (ardeneEmployees.some(e => e.id === previous)) {
+    select.value = previous;
+  }
+}
+
+function addSchedule() {
+  const employeeId = document.getElementById("scheduleEmployee").value;
+  const day = document.getElementById("scheduleDay").value;
+  const start = document.getElementById("scheduleStart").value;
+  const end = document.getElementById("scheduleEnd").value;
+
+  const employee = ardeneEmployees.find(e => e.id === employeeId);
+
+  if (!employee) {
+    alert("Sélectionne une employée.");
+    return;
+  }
+
+  if (!start || !end || end <= start) {
+    alert("Entre des heures valides. L'heure de fin doit être après l'heure de début.");
+    return;
+  }
+
+  ardeneSchedules.push({
+    id: "HOR-" + Date.now(),
+    employeeId,
+    employeeName: employee.firstName + " " + employee.lastName,
+    day,
+    start,
+    end
+  });
+
+  saveSchedules();
+  renderWeeklySchedule();
+
+  document.getElementById("scheduleStart").value = "";
+  document.getElementById("scheduleEnd").value = "";
+
+  alert("Quart ajouté à l'horaire !");
+}
+
+function renderWeeklySchedule() {
+  const container = document.getElementById("weeklySchedule");
+  if (!container) return;
+
+  container.innerHTML = scheduleDays.map(day => {
+    const shifts = ardeneSchedules
+      .filter(s => s.day === day)
+      .sort((a, b) => a.start.localeCompare(b.start));
+
+    return `
+      <div style="padding:14px 0;border-bottom:1px solid #eadfe3">
+        <h3>${day}</h3>
+        ${shifts.length === 0
+          ? "<p class='muted'>Aucun quart planifié.</p>"
+          : shifts.map(s => `
+            <div style="background:#fff7fa;padding:12px;border-radius:10px;margin:8px 0">
+              <strong>${escapeHTML(s.employeeName)}</strong>
+              <p>${escapeHTML(s.start)} – ${escapeHTML(s.end)}</p>
+              <button onclick="deleteSchedule('${s.id}')">
+                Supprimer ce quart
+              </button>
+            </div>
+          `).join("")
+        }
+      </div>
+    `;
+  }).join("");
+}
+
+function deleteSchedule(scheduleId) {
+  if (!confirm("Veux-tu vraiment supprimer ce quart ?")) return;
+
+  ardeneSchedules = ardeneSchedules.filter(s => s.id !== scheduleId);
+  saveSchedules();
+  renderWeeklySchedule();
+}
+
+const scheduleEmployeeSelect = document.getElementById("scheduleEmployee");
+if (scheduleEmployeeSelect) {
+  scheduleEmployeeSelect.addEventListener("focus", renderScheduleEmployees);
+}
+
+renderScheduleEmployees();
+renderWeeklySchedule();
+
+</script>
+
+</body>
+</html>
